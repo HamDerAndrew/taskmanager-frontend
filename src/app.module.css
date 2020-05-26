@@ -1,9 +1,9 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App-header {
-  min-height: 100vh;
+.appHeader {
+  /*min-height: 100vh;*/
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +12,11 @@
   color: white;
 }
 
-.App-link {
+.loginbox {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.appLink {
   color: #61dafb;
 }

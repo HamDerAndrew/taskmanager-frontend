@@ -1,18 +1,18 @@
 import React from 'react';
-import './App.css';
+import styles from './app.module.css';
+import Footer from './components/Footer/Footer';
+import Login from './components/Login/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className={styles.app}>
+      <header className={styles.appHeader}>
         <h1>Welcome to the task manager app</h1>
       </header>
-      <div className="login-box">
-        <form>
-          <input type="text" name="username" />
-          <input type="password" name="password" />
-        </form>
+      <div className={styles.loginbox}>
+        <Login />
       </div>
+      <Footer />
     </div>
   );
 }

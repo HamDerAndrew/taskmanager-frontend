@@ -1,0 +1,23 @@
+.welcome {
+  color: white
+}
+
+.formbox {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputBox {
+    margin: 10px 0px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 18px;
+  }
+
+  .btn {
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+  }
