@@ -1,3 +1,8 @@
+# Task manger app
+This repo contains the frontend for the taskmanager backend I have built.
+
+Link to taskmanager repo: https://github.com/HamDerAndrew/fullstack-tasks-manager
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
