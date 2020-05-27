@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import styles from './home.module.css';
 import Footer from '../../components/Footer/Footer';
 import Login from '../../components/Login/Login';
@@ -12,25 +13,30 @@ class Home extends Component {
       email: '',
       password: ''
     }
+  }
 
-    //this.loginHandler = this.loginHandler.bind(this)
+  handleChange = (event) => {
+    this.setState({
+      email: event.target.value,
+      password: event.target.value
+    })
   }
 
   loginHandler = (event) => {
+    const { email, password } = this.state
+    const url = 'https://larsen-taskmanager-project.herokuapp.com/users/login'
     event.preventDefault();
-    this.setState({
-      loggedIn: true
+    axios.post(url, {
+      email,
+      password
+    }).then((response) => {
+      console.log(response)
+    }).catch((error) => {
+      console.log(error)
     })
-    console.log(this.state.loggedIn)
   }
 
   render() {
-
-    if (this.state.loggedIn === true) {
-      console.log("lets redirect")
-      return <Redirect to="/user" />
-    }
-
     return (
       <div className={styles.app}>
         <header className={styles.appHeader}>
@@ -45,7 +51,11 @@ class Home extends Component {
           </ul>
         </header>
         <div className={styles.loginbox}>
-          <Login loginHandler={this.loginHandler}/>
+          <Login 
+            email={this.state.email}
+            password={this.state.password}
+            handleChange={this.handleChange}
+            loginHandler={this.loginHandler}/>
         </div>
         <Footer />
       </div>
