@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Navigation from './components/Navigation/Navigation'
+import Routing from './routing/routing'
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Navigation />
+      <Routing />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
