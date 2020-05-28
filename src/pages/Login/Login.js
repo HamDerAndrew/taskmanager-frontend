@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import styles from './home.module.css';
+import styles from './login.module.css';
+import Navigation from '../../components/Navigation/Navigation'
 import Footer from '../../components/Footer/Footer';
-import Login from '../../components/Login/Login';
+import Login from '../../components/LoginForm/LoginForm';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
+      token: '',
       email: '',
       password: ''
     }
   }
 
-  handleChange = (event) => {
+  handleEmail = (event) => {
     this.setState({
       email: event.target.value,
+    })
+  }
+
+  handlePassword = (event) => {
+    this.setState({
       password: event.target.value
     })
   }
@@ -30,7 +36,10 @@ class Home extends Component {
       email,
       password
     }).then((response) => {
-      console.log(response)
+      console.log(response.data.token)
+      this.setState({
+        token: response.data.token
+      })
     }).catch((error) => {
       console.log(error)
     })
@@ -38,25 +47,18 @@ class Home extends Component {
 
   render() {
     return (
+      this.state.token ? 
+      <Redirect to={{pathname: '/user/1', search: 'test' ,state: {token: this.state.token}}} /> 
+      :
       <div className={styles.app}>
-        <header className={styles.appHeader}>
-          <h1>Welcome to the task manager app</h1>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-        </header>
-        <div className={styles.loginbox}>
+        <Navigation />
           <Login 
-            email={this.state.email}
-            password={this.state.password}
-            handleChange={this.handleChange}
-            loginHandler={this.loginHandler}/>
-        </div>
+              email={this.state.email}
+              password={this.state.password}
+              handleEmail={this.handleEmail}
+              handlePassword={this.handlePassword}
+              loginHandler={this.loginHandler}
+            />
         <Footer />
       </div>
     );

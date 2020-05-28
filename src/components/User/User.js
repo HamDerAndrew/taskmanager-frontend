@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import styles from './user.module.css';
 
 class Task extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            tasks: []
+            tasks: [],
+            token: this.props.location.state
         }
     }
 
@@ -22,11 +24,12 @@ class Task extends Component {
             }
         ]
         this.setState({tasks: tasks})
+        console.log(this.state.token)
     }
 
     render() {
         return(
-            <div>
+            <div className={styles.userBody}>
             <h1>Welcome to your tasks</h1>
             <p>These are all of your tasks</p>
             {this.state.tasks.map((item) => (
