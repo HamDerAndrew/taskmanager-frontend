@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styles from './user.module.css';
+import { Route, Redirect } from 'react-router-dom';
 
-class Task extends Component {
+class User extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            isLoggedIn: this.props.loggedIn,
             tasks: [],
             token: this.props.location.state
         }
@@ -24,22 +26,29 @@ class Task extends Component {
             }
         ]
         this.setState({tasks: tasks})
-        console.log(this.state.token)
+        console.log(this.props.location)
     }
 
     render() {
-        return(
-            <div className={styles.userBody}>
-            <h1>Welcome to your tasks</h1>
-            <p>These are all of your tasks</p>
-            {this.state.tasks.map((item) => (
-                <li key={item.id}> 
-                    Task: {item.description} - Completed: {item.completed}
-                </li>
-            ))}
-            </div>
+       
+        return (
+            <Route render={(props) => (
+                this.state.isLoggedIn ?
+                (<div className={styles.userBody}>
+                    <h1>Welcome to your tasks</h1>
+                    <p>These are all of your tasks</p>
+                    {this.state.tasks.map((item) => (
+                        <li key={item.id}> 
+                            Task: {item.description} - Completed: {item.completed}
+                        </li>
+                    ))}
+                    </div>)
+                :
+                <Redirect to="/" />
+            )}/>
+            
         )
     }
 }
 
-export default Task
+export default User

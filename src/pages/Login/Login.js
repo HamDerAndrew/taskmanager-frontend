@@ -10,9 +10,10 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: '',
-      email: '',
-      password: ''
+      loggedIn: this.props.loggedIn,
+      token: this.props.token,
+      email: 'andrewsondergaard@gmail.com',
+      password: 'test123'
     }
   }
 
@@ -38,7 +39,8 @@ class Home extends Component {
     }).then((response) => {
       console.log(response.data.token)
       this.setState({
-        token: response.data.token
+        token: response.data.token,
+        // loggedIn: this.props.loggedIn
       })
     }).catch((error) => {
       console.log(error)
@@ -47,10 +49,12 @@ class Home extends Component {
 
   render() {
     return (
-      this.state.token ? 
-      <Redirect to={{pathname: '/user/1', search: 'test' ,state: {token: this.state.token}}} /> 
+      this.state.loggedIn
+      ?
+      <Redirect to="/user" />
       :
       <div className={styles.app}>
+        <h1>Login status:{this.props.loggedIn}</h1>
         <Navigation />
           <Login 
               email={this.state.email}
