@@ -26,12 +26,29 @@ class User extends Component {
         })
     }
 
-    readTasks = async () => {
-        const url = await 'https://larsen-taskmanager-project.herokuapp.com/tasks'
+    readTasks =  () => {
+        const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
         const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.get(url, { 'headers': header })
+        axios.get(url, { 'headers': header })  
         .then((response) => {
             console.log(response.data)
+            this.setState({tasks: response.data})
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    createTask = () => {
+        console.log("create task")
+    }
+
+    deleteTask = (taskId) => {
+        console.log("Delete task:", taskId)
+        const url = `https://larsen-taskmanager-project.herokuapp.com/tasks/${taskId}`
+        const header = { 'Authorization': `Bearer ${this.state.token}`}
+        axios.delete(url, {'headers': header})
+        .then((response) => {
+            this.readTasks();
         }).catch((error) => {
             console.log(error)
         })
@@ -56,24 +73,10 @@ class User extends Component {
     }
 
     componentDidMount() {
-        this.readTasks()
-        let tasks = [
-            {
-                id: 1,
-                description: "Let's develop something",
-                completed: "false"
-            },
-            {
-                id: 2,
-                description: "Let's make React Router work",
-                completed: "false"
-            }
-        ]
-        this.setState({tasks: tasks})
+        //this.readTasks()
     }
 
     render() {
-       
         return (
             <Route render={(props) => (
                 this.state.isLoggedIn ?
@@ -81,13 +84,20 @@ class User extends Component {
                     <h1>Welcome to your tasks</h1>
                     <button onClick={this.readUser} >Read user</button>
                     <button onClick={this.readTasks} >Read tasks</button>
+                    <button onClick={this.createTask}>Create task</button>
                     <button onClick={this.logOut}>Log out</button>
                     <p>These are all of your tasks</p>
-                    {this.state.tasks.map((item) => (
-                        <li key={item.id}> 
-                            Task: {item.description} - Completed: {item.completed}
-                        </li>
-                    ))}
+                    <ul>
+                        {this.state.tasks.map((item) => (
+                            <li key={item._id}>
+                                <div>
+                                Task: {item.description} - Completed: {item.completed.toString()}
+                                <button onClick={() => this.deleteTask(item._id)}>Delete</button>
+                                <button>Edit</button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                     </div>)
                 :
                 <Redirect to="/" />
