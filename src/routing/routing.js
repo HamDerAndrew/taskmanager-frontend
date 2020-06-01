@@ -2,16 +2,33 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login/Login';
 import About from '../pages/About/About';
-import User from '../components/User/User';
+import User from '../pages/User/User';
+import axios from 'axios';
 
 class Routing extends Component {
     constructor(props) {
         super(props)
         this.state = {
             loggedIn: false,
-            token: "set"
+            token: "",
         }
     }
+
+    logoutCallback = (childData) => {
+        this.setState({
+            loggedIn: childData.loggedIn,
+            token: childData.token
+        })
+    }
+
+    loginCallback = (childData) => {
+        this.setState({
+            loggedIn: childData.loggedIn,
+            token: childData.token
+        })
+        //axios.defaults.headers.common['Authorization'] =  `Bearer ${this.state.token}`
+    }
+
     render() {
         return (
             <Switch>
@@ -21,6 +38,7 @@ class Routing extends Component {
                         <Login {...props}
                         loggedIn={this.state.loggedIn}
                         token={this.state.token}
+                        loginCallback={this.loginCallback}
                         />
                     )}
                 />
@@ -31,6 +49,7 @@ class Routing extends Component {
                         <User {...props} 
                             loggedIn={this.state.loggedIn} 
                             token={this.state.token}
+                            logoutCallback={this.logoutCallback}
                         />
                     )}
                 />

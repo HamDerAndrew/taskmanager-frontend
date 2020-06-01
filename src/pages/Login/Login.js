@@ -4,16 +4,16 @@ import axios from 'axios';
 import styles from './login.module.css';
 import Navigation from '../../components/Navigation/Navigation'
 import Footer from '../../components/Footer/Footer';
-import Login from '../../components/LoginForm/LoginForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
 
-class Home extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: this.props.loggedIn,
-      token: this.props.token,
-      email: 'andrewsondergaard@gmail.com',
-      password: 'test123'
+      loggedIn: false,
+      token: '',
+      email: '',
+      password: ''
     }
   }
 
@@ -29,6 +29,11 @@ class Home extends Component {
     })
   }
 
+  sendData = () => {
+    console.log('from Login')
+    this.props.loginCallback({loggedIn: this.state.loggedIn, token: this.state.token})
+  }
+
   loginHandler = (event) => {
     const { email, password } = this.state
     const url = 'https://larsen-taskmanager-project.herokuapp.com/users/login'
@@ -37,11 +42,13 @@ class Home extends Component {
       email,
       password
     }).then((response) => {
-      console.log(response.data.token)
       this.setState({
         token: response.data.token,
-        // loggedIn: this.props.loggedIn
+        loggedIn: true
       })
+      this.sendData();
+      //axios.defaults.headers.common['Authorization'] =  `Bearer ${this.state.token}`
+      this.props.history.push("/user")
     }).catch((error) => {
       console.log(error)
     })
@@ -56,7 +63,7 @@ class Home extends Component {
       <div className={styles.app}>
         <h1>Login status:{this.props.loggedIn}</h1>
         <Navigation />
-          <Login 
+          <LoginForm 
               email={this.state.email}
               password={this.state.password}
               handleEmail={this.handleEmail}
@@ -69,4 +76,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Login;
