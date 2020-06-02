@@ -13,24 +13,18 @@ class Login extends Component {
       loggedIn: false,
       token: '',
       email: '',
-      password: ''
+      password: '',
+      test: 'hello'
     }
   }
 
-  handleEmail = (event) => {
+  handleChange = (event) => {
     this.setState({
-      email: event.target.value,
-    })
-  }
-
-  handlePassword = (event) => {
-    this.setState({
-      password: event.target.value
+      [event.target.name]: event.target.value
     })
   }
 
   sendData = () => {
-    console.log('from Login')
     this.props.loginCallback({loggedIn: this.state.loggedIn, token: this.state.token})
   }
 
@@ -66,8 +60,7 @@ class Login extends Component {
           <LoginForm 
               email={this.state.email}
               password={this.state.password}
-              handleEmail={this.handleEmail}
-              handlePassword={this.handlePassword}
+              handleChange={this.handleChange}
               loginHandler={this.loginHandler}
             />
         <Footer />

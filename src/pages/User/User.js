@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './user.module.css';
 import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Modal from '../../components/Modal/Modal';
 
 class User extends Component {
     constructor(props) {
@@ -9,9 +10,18 @@ class User extends Component {
         this.state = {
             isLoggedIn: this.props.loggedIn,
             tasks: [],
-            token: this.props.token
+            token: this.props.token,
+            isModalToggled: false,
+            selectedOption: 'completed'
         }
     }
+
+    handleChange = (event) => {
+        this.setState({
+          [event.target.name]: event.target.value,
+          selectedOption: event.target.value
+        })
+      }
 
     readUser = () => {
         const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
@@ -72,6 +82,22 @@ class User extends Component {
         })
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+    }
+
+    cancelEdit = () => {
+        this.setState({
+            isModalToggled: false
+        })
+    }
+
+    toggleModal = () => {
+        this.setState(prevState => ({
+            isModalToggled: !this.state.isModalToggled
+        }))
+    }
+
     componentDidMount() {
         //this.readTasks()
     }
@@ -93,11 +119,21 @@ class User extends Component {
                                 <div>
                                 Task: {item.description} - Completed: {item.completed.toString()}
                                 <button onClick={() => this.deleteTask(item._id)}>Delete</button>
-                                <button>Edit</button>
+                                <button onClick={this.toggleModal}>Edit</button>
                                 </div>
                             </li>
                         ))}
                     </ul>
+                    <Modal
+                        isCompleted="completed" 
+                        isNotCompleted="uncompleted"
+                        completedTrue={this.state.selectedOption === 'completed'}
+                        completedFalse={this.state.selectedOption === 'uncompleted'} 
+                        active={this.state.isModalToggled}
+                        handleSubmit={this.handleSubmit}
+                        handleChange={this.handleChange}
+                        cancelEdit={this.cancelEdit}
+                     />
                     </div>)
                 :
                 <Redirect to="/" />
