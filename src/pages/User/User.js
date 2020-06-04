@@ -12,15 +12,23 @@ class User extends Component {
             tasks: [],
             token: this.props.token,
             isModalToggled: false,
-            selectedOption: 'completed'
+            taskId: '',
+            description: '',
+            taskStatus: true
         }
     }
 
     handleChange = (event) => {
+        console.log({[event.target.name]: event.target.value})
         this.setState({
-          [event.target.name]: event.target.value,
-          selectedOption: event.target.value
+          [event.target.name]: event.target.value
         })
+      }
+
+      handleTest = (event) => {
+          this.setState({
+              taskStatus: event.target.value
+          })
       }
 
     readUser = () => {
@@ -41,7 +49,6 @@ class User extends Component {
         const header = { 'Authorization': `Bearer ${this.state.token}`}
         axios.get(url, { 'headers': header })  
         .then((response) => {
-            console.log(response.data)
             this.setState({tasks: response.data})
         }).catch((error) => {
             console.log(error)
@@ -58,6 +65,21 @@ class User extends Component {
         const header = { 'Authorization': `Bearer ${this.state.token}`}
         axios.delete(url, {'headers': header})
         .then((response) => {
+            this.readTasks();
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    updateTask = (taskId) => {
+        const url = `https://larsen-taskmanager-project.herokuapp.com/tasks/${taskId}`
+        const header = { 'Authorization': `Bearer ${this.state.token}`}
+        axios.patch(url, {
+            description: this.state.description,
+            completed: this.state.taskStatus
+        }, {'headers': header})
+        .then((response) => {
+            console.log(response.data)
             this.readTasks();
         }).catch((error) => {
             console.log(error)
@@ -84,17 +106,28 @@ class User extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-    }
-
-    cancelEdit = () => {
+        this.updateTask(this.state.taskId);
         this.setState({
             isModalToggled: false
         })
     }
 
-    toggleModal = () => {
+    cancelEdit = (event) => {
+        event.preventDefault()
+        this.setState({
+            isModalToggled: false,
+        })
+    }
+
+    toggleModal = (id, task, status) => {
+        console.log(id)
+        console.log(task)
+        console.log(status)
         this.setState(prevState => ({
-            isModalToggled: !this.state.isModalToggled
+            isModalToggled: !this.state.isModalToggled,
+            taskId: id,
+            description: task,
+            taskStatus: status
         }))
     }
 
@@ -119,16 +152,16 @@ class User extends Component {
                                 <div>
                                 Task: {item.description} - Completed: {item.completed.toString()}
                                 <button onClick={() => this.deleteTask(item._id)}>Delete</button>
-                                <button onClick={this.toggleModal}>Edit</button>
+                                <button onClick={() => this.toggleModal(item._id, item.description, item.completed)}>Edit</button>
                                 </div>
                             </li>
                         ))}
                     </ul>
+
                     <Modal
-                        isCompleted="completed" 
-                        isNotCompleted="uncompleted"
-                        completedTrue={this.state.selectedOption === 'completed'}
-                        completedFalse={this.state.selectedOption === 'uncompleted'} 
+                        description={this.state.description}
+                        completedTrue={this.state.taskStatus === true}
+                        completedFalse={this.state.taskStatus === false} 
                         active={this.state.isModalToggled}
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleChange}

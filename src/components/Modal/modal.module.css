@@ -50,6 +50,9 @@
     cursor: pointer;
     font-size: 17px;
     margin-right: 10px;
+    color: white;
+    font-weight: bold;
+    border: 1px solid darkgrey;
 }
 
 .saveEdit {

@@ -14,7 +14,6 @@ class Login extends Component {
       token: '',
       email: '',
       password: '',
-      test: 'hello'
     }
   }
 
