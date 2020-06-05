@@ -141,23 +141,27 @@ class User extends Component {
                 this.state.isLoggedIn ?
                 (<div className={styles.userBody}>
                     <h1>Welcome to your tasks</h1>
-                    <button onClick={this.readUser} >Read user</button>
-                    <button onClick={this.readTasks} >Read tasks</button>
-                    <button onClick={this.createTask}>Create task</button>
-                    <button onClick={this.logOut}>Log out</button>
+                    <button onClick={this.readUser} className={styles.btn}>Read user</button>
+                    <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
+                    <button onClick={this.createTask} className={styles.btn}>Create task</button>
+                    <button onClick={this.logOut} className={styles.btn}>Log out</button>
                     <p>These are all of your tasks</p>
                     <ul>
                         {this.state.tasks.map((item) => (
-                            <li key={item._id}>
-                                <div>
-                                Task: {item.description} - Completed: {item.completed.toString()}
-                                <button onClick={() => this.deleteTask(item._id)}>Delete</button>
-                                <button onClick={() => this.toggleModal(item._id, item.description, item.completed)}>Edit</button>
+                            <li key={item._id} className={styles.listItem}>
+                                <div className={styles.taskItem}>
+                                    <div>
+                                        <p>Task: {item.description} - Completed: {item.completed.toString()}</p>
+                                    </div>
+                                    <div className={styles.btnContainer}>
+                                        <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
+                                        <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
+                                    </div>
                                 </div>
                             </li>
                         ))}
                     </ul>
-
+                    
                     <Modal
                         description={this.state.description}
                         completedTrue={this.state.taskStatus === true}
