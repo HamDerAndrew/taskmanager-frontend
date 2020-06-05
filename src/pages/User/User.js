@@ -3,6 +3,7 @@ import styles from './user.module.css';
 import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
+import Footer from '../../components/Footer/Footer';
 
 class User extends Component {
     constructor(props) {
@@ -140,6 +141,7 @@ class User extends Component {
             <Route render={(props) => (
                 this.state.isLoggedIn ?
                 (<div className={styles.userBody}>
+                    <div className={styles.userContent}>
                     <h1>Welcome to your tasks</h1>
                     <button onClick={this.readUser} className={styles.btn}>Read user</button>
                     <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
@@ -151,7 +153,8 @@ class User extends Component {
                             <li key={item._id} className={styles.listItem}>
                                 <div className={styles.taskItem}>
                                     <div>
-                                        <p>Task: {item.description} - Completed: {item.completed.toString()}</p>
+                                        <p>Task: {item.description}</p>
+                                        <p>Completed: {item.completed.toString()}</p>
                                     </div>
                                     <div className={styles.btnContainer}>
                                         <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
@@ -161,7 +164,10 @@ class User extends Component {
                             </li>
                         ))}
                     </ul>
-                    
+                    <form>
+                       <label><input type="radio" name="testR" value="yes" onChange={this.handleTest} /> yes</label>
+                       <label><input type="radio" name="testR" value="no" onChange={this.handleTest}/>no </label>
+                    </form>
                     <Modal
                         description={this.state.description}
                         completedTrue={this.state.taskStatus === true}
@@ -171,6 +177,8 @@ class User extends Component {
                         handleChange={this.handleChange}
                         cancelEdit={this.cancelEdit}
                      />
+                     </div>
+                     <Footer />
                     </div>)
                 :
                 <Redirect to="/" />

@@ -1,5 +1,12 @@
 .userBody {
     color: snow;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.userContent {
+    flex: 1;
 }
 
 .listItem {
@@ -19,6 +26,7 @@
 
 .btn {
     background-color: #1f201f;
+    height: 50px;
     padding: 10px;
     border-radius: 10px;
     cursor: pointer;

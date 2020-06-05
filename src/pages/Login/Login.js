@@ -12,8 +12,8 @@ class Login extends Component {
     this.state = {
       loggedIn: false,
       token: '',
-      email: '',
-      password: '',
+      email: 'andrewsondergaard@gmail.com',
+      password: 'test123',
     }
   }
 
@@ -54,7 +54,6 @@ class Login extends Component {
       <Redirect to="/user" />
       :
       <div className={styles.app}>
-        <h1>Login status:{this.props.loggedIn}</h1>
         <Navigation />
           <LoginForm 
               email={this.state.email}
