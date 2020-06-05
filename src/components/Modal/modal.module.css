@@ -32,12 +32,12 @@
     border: 1px solid black;
 }
 
-.radioBox {
-    padding: 20px;
+.checkboxContainer {
+    padding: 20px 0 20px 0;
 }
 
-.status {
-    display: block;
+.checkboxLabel {
+    color: black;
 }
 
 .btnContainer {

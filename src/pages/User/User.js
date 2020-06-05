@@ -20,16 +20,10 @@ class User extends Component {
     }
 
     handleChange = (event) => {
-        console.log({[event.target.name]: event.target.value})
+        const eventValue = event.target.name === 'taskStatus' ? event.target.checked : event.target.value
         this.setState({
-          [event.target.name]: event.target.value
+          [event.target.name]: eventValue
         })
-      }
-
-      handleTest = (event) => {
-          this.setState({
-              taskStatus: event.target.value
-          })
       }
 
     readUser = () => {
@@ -164,14 +158,9 @@ class User extends Component {
                             </li>
                         ))}
                     </ul>
-                    <form>
-                       <label><input type="radio" name="testR" value="yes" onChange={this.handleTest} /> yes</label>
-                       <label><input type="radio" name="testR" value="no" onChange={this.handleTest}/>no </label>
-                    </form>
                     <Modal
                         description={this.state.description}
-                        completedTrue={this.state.taskStatus === true}
-                        completedFalse={this.state.taskStatus === false} 
+                        completed={this.state.taskStatus}
                         active={this.state.isModalToggled}
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleChange}

@@ -8,17 +8,9 @@ const Modal = (props) => {
                 <form className={styles.taskForm} onSubmit={props.handleSubmit}>
                     <label>Edit your task</label>
                     <input type="text" name="description" value={props.description} placeholder="Description" onChange={props.handleChange} className={styles.taskDescription}/>
-                    <div className={styles.radioBox}>
-                        {/* <label>
-                            <input type="radio" name="taskProgess"  value={props.completedTrue} onChange={props.handleChange} className={styles.status}/>
-                            Completed
-                        </label>
-                        <label>
-                            <input type="radio" name="taskProgress"  value={props.completedFalse} onChange={props.handleChange} className={styles.status} />
-                            Not completed
-                        </label> */}
-                        <input type="radio" name="testR" value="test" onChange={props.handleChange} />
-                        <input type="radio" name="testR" value="testTwo" onChange={props.handleChange}/>
+                    <div className={styles.checkboxContainer}>
+                        <label className={styles.checkboxLabel}>Completed</label>
+                        <input type="checkbox" name="taskStatus" checked={props.completed} onChange={props.handleChange} />
                     </div>
                     <div className={styles.btnContainer}>
                         <button onClick={props.saveTask} className={styles.saveEdit} >Save</button>
