@@ -3,6 +3,7 @@ import styles from './user.module.css';
 import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
+import CreateTask from '../../components/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
 
 class User extends Component {
@@ -13,6 +14,7 @@ class User extends Component {
             tasks: [],
             token: this.props.token,
             isModalToggled: false,
+            createTaskModalToggled: false,
             taskId: '',
             description: '',
             taskStatus: true
@@ -52,6 +54,21 @@ class User extends Component {
 
     createTask = () => {
         console.log("create task")
+        const { description, taskStatus } = this.state
+        const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
+        const header = { 'Authorization': `Bearer ${this.state.token}`}
+        axios.post(url, 
+            {
+                description,
+                taskStatus
+            }, 
+            { 'headers': header })
+        .then((response) => {
+            console.log("Task created. ", response.data)
+            this.readTasks()
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     deleteTask = (taskId) => {
@@ -101,9 +118,15 @@ class User extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.updateTask(this.state.taskId);
+        if (this.state.isModalToggled) {
+            this.updateTask(this.state.taskId);
+        }
+        if (this.state.createTaskModalToggled) {
+            this.createTask()
+        }
         this.setState({
-            isModalToggled: false
+            isModalToggled: false,
+            createTaskModalToggled: false
         })
     }
 
@@ -111,6 +134,7 @@ class User extends Component {
         event.preventDefault()
         this.setState({
             isModalToggled: false,
+            createTaskModalToggled: false,
         })
     }
 
@@ -121,6 +145,14 @@ class User extends Component {
         this.setState(prevState => ({
             isModalToggled: !this.state.isModalToggled,
             taskId: id,
+            description: task,
+            taskStatus: status
+        }))
+    }
+
+    createTaskModal = (task, status) => {
+        this.setState(prevState => ({
+            createTaskModalToggled: !this.state.createTaskModalToggled,
             description: task,
             taskStatus: status
         }))
@@ -139,7 +171,7 @@ class User extends Component {
                     <h1>Welcome to your tasks</h1>
                     <button onClick={this.readUser} className={styles.btn}>Read user</button>
                     <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
-                    <button onClick={this.createTask} className={styles.btn}>Create task</button>
+                    <button onClick={() => this.createTaskModal("", "")} className={styles.btn}>Create task</button>
                     <button onClick={this.logOut} className={styles.btn}>Log out</button>
                     <p>These are all of your tasks</p>
                     <ul>
@@ -162,6 +194,14 @@ class User extends Component {
                         description={this.state.description}
                         completed={this.state.taskStatus}
                         active={this.state.isModalToggled}
+                        handleSubmit={this.handleSubmit}
+                        handleChange={this.handleChange}
+                        cancelEdit={this.cancelEdit}
+                     />
+                     <CreateTask 
+                        description={this.state.description}
+                        completed={this.state.taskStatus}
+                        active={this.state.createTaskModalToggled}
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleChange}
                         cancelEdit={this.cancelEdit}
