@@ -3,8 +3,9 @@ import styles from './user.module.css';
 import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
-import CreateTask from '../../components/Modal/Modal';
+import CreateTaskModal from '../../components/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
+import { CreateTask, UpdateTask, DeleteTask, LogOut } from '../../services/ApiService';
 
 class User extends Component {
     constructor(props) {
@@ -53,16 +54,8 @@ class User extends Component {
     }
 
     createTask = () => {
-        console.log("create task")
-        const { description, taskStatus } = this.state
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.post(url, 
-            {
-                description,
-                taskStatus
-            }, 
-            { 'headers': header })
+        const { token, description, taskStatus } = this.state
+        CreateTask(token, description, taskStatus)
         .then((response) => {
             console.log("Task created. ", response.data)
             this.readTasks()
@@ -72,10 +65,7 @@ class User extends Component {
     }
 
     deleteTask = (taskId) => {
-        console.log("Delete task:", taskId)
-        const url = `https://larsen-taskmanager-project.herokuapp.com/tasks/${taskId}`
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.delete(url, {'headers': header})
+        DeleteTask(taskId, this.state.token)
         .then((response) => {
             this.readTasks();
         }).catch((error) => {
@@ -84,12 +74,8 @@ class User extends Component {
     }
 
     updateTask = (taskId) => {
-        const url = `https://larsen-taskmanager-project.herokuapp.com/tasks/${taskId}`
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.patch(url, {
-            description: this.state.description,
-            completed: this.state.taskStatus
-        }, {'headers': header})
+        const { token, description, completed } = this.state
+        UpdateTask(taskId, token, description, completed)
         .then((response) => {
             console.log(response.data)
             this.readTasks();
@@ -103,14 +89,11 @@ class User extends Component {
     }
 
     logOut = () => {
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/logout'
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.post(url, {}, {'headers': header})
+        LogOut(this.state.token)
         .then((response) => {
             this.setState({ token: '', loggedIn: false})
             this.sendLogout();
             this.props.history.goBack()
-            console.log(response.data)
         }).catch((error) => {
             console.log(error)
         })
@@ -139,9 +122,6 @@ class User extends Component {
     }
 
     toggleModal = (id, task, status) => {
-        console.log(id)
-        console.log(task)
-        console.log(status)
         this.setState(prevState => ({
             isModalToggled: !this.state.isModalToggled,
             taskId: id,
@@ -199,7 +179,7 @@ class User extends Component {
                         handleChange={this.handleChange}
                         cancelEdit={this.cancelEdit}
                      />
-                     <CreateTask 
+                     <CreateTaskModal 
                         description={this.state.description}
                         completed={this.state.taskStatus}
                         active={this.state.createTaskModalToggled}
