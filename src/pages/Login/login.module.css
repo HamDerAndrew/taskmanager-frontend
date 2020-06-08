@@ -5,9 +5,8 @@
   min-height: 100vh;
 }
 
-.loginbox {
-  width: 30%;
-  margin: 0 auto;
+.loginContent {
+  flex-grow: 1;
 }
 
 .appLink {

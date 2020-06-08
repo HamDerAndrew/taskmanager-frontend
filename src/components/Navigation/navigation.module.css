@@ -7,3 +7,12 @@
     font-size: calc(10px + 2vmin);
     color: white;
   }
+
+  .navList {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navListItem {
+    margin: 5px;
+  }

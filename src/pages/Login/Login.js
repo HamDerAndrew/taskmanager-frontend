@@ -54,6 +54,7 @@ class Login extends Component {
       <Redirect to="/user" />
       :
       <div className={styles.app}>
+        <div className={styles.loginContent}>
         <Navigation />
           <LoginForm 
               email={this.state.email}
@@ -61,6 +62,7 @@ class Login extends Component {
               handleChange={this.handleChange}
               loginHandler={this.loginHandler}
             />
+        </div> 
         <Footer />
       </div>
     );

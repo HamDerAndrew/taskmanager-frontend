@@ -159,7 +159,8 @@ class User extends Component {
     }
 
     componentDidMount() {
-        //this.readTasks()
+        console.log("User component mounted")
+        this.readTasks()
     }
 
     render() {
@@ -171,7 +172,7 @@ class User extends Component {
                     <h1>Welcome to your tasks</h1>
                     <button onClick={this.readUser} className={styles.btn}>Read user</button>
                     <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
-                    <button onClick={() => this.createTaskModal("", "")} className={styles.btn}>Create task</button>
+                    <button onClick={() => this.createTaskModal("", "")} className={styles.createBtn}>Create task</button>
                     <button onClick={this.logOut} className={styles.btn}>Log out</button>
                     <p>These are all of your tasks</p>
                     <ul>

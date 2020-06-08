@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login/Login';
 import About from '../pages/About/About';
 import User from '../pages/User/User';
-import axios from 'axios';
 
 class Routing extends Component {
     constructor(props) {
@@ -26,7 +25,6 @@ class Routing extends Component {
             loggedIn: childData.loggedIn,
             token: childData.token
         })
-        //axios.defaults.headers.common['Authorization'] =  `Bearer ${this.state.token}`
     }
 
     render() {

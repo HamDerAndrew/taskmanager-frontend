@@ -46,3 +46,8 @@
     composes: btn;
     background-color: rgb(0, 145, 255);
 }
+
+.createBtn {
+    composes: btn;
+    background-color: #0b9d0b;
+}
