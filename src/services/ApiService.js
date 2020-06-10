@@ -31,7 +31,7 @@ export const UpdateTask = (taskId, token, description, completed) => {
     }, {'headers': header})
 }
 
-//
+// Delete task request
 export const DeleteTask = (taskId, token) => {
     const url = `https://larsen-taskmanager-project.herokuapp.com/tasks/${taskId}`
     const header = { 'Authorization': `Bearer ${token}`}

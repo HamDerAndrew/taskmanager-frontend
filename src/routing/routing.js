@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login/Login';
+import Signup from '../pages/Signup/Signup';
 import About from '../pages/About/About';
 import User from '../pages/User/User';
 
@@ -40,6 +41,7 @@ class Routing extends Component {
                         />
                     )}
                 />
+                <Route path="/signup" component={Signup} />
                 <Route path="/about" component={About} />
                 <Route 
                     path="/user/" 

@@ -12,6 +12,9 @@ const Navigation = () => {
                 <Link to="/">Home</Link>
                 </li>
                 <li className={styles.navListItem}>
+                <Link to="/signup">Sign up</Link>
+                </li>
+                <li className={styles.navListItem}>
                 <Link to="/about">About</Link>
                 </li>
             </ul>
