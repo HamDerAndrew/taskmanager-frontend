@@ -13,10 +13,29 @@ class Signup extends Component {
             age: '',
             email: '',
             password: '',
+            formError: false,
+            errName: '',
+            errAge: '',
+            errEmail: '',
+            errPassword: ''
         }
     }
 
     handleChange = (event) => {
+        //const { name, age, email,  password } = this.state
+
+        if (event.target.name === 'age' && !event.target.value.match('^[0-9]+$')) {
+            console.log("age must be a positive number")
+        }
+
+        if (event.target.name  === 'email' && event.target.value <= 0 ) {
+            console.log("must not be empty")
+        }
+
+        if (event.target.name === 'password' && (event.target.value.length <= 7 && event.target.value.length >= 0)) {
+            console.log("Password must be at least 8 characters")
+        }
+
         this.setState({
             [event.target.name]: event.target.value 
         })
@@ -37,7 +56,16 @@ class Signup extends Component {
             console.log("User created")
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error.response.data.errors)
+            const { name, age, email, password } = error.response.data.errors
+            const errorMsg = error.response.data.errors
+            this.setState({
+                formError: true,
+                errName: name.message || '',
+                errAge: age.message || '',
+                errEmail: email.message || '',
+                errPassword: password.message || ''
+            })
         })
     }
 
@@ -54,6 +82,12 @@ class Signup extends Component {
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleChange}
                     />
+                    <div className={this.state.formError ? styles.errorContainer: ''}>
+                        <p>{this.state.errName}</p>
+                        <p>{this.state.errAge || ''}</p>
+                        <p>{this.state.errEmail}</p>
+                        <p>{this.state.errPassword}</p>
+                    </div>
                 </div>
                 <Footer />
             </div>
