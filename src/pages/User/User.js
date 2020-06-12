@@ -74,8 +74,8 @@ class User extends Component {
     }
 
     updateTask = (taskId) => {
-        const { token, description, completed } = this.state
-        UpdateTask(taskId, token, description, completed)
+        const { token, description, taskStatus } = this.state
+        UpdateTask(taskId, token, description, taskStatus)
         .then((response) => {
             console.log(response.data)
             this.readTasks();
@@ -143,11 +143,13 @@ class User extends Component {
         this.readTasks()
     }
 
+    componentWillUnmount() {
+        console.log("Component unmounting")
+    }
+
     render() {
         return (
-            <Route render={(props) => (
-                this.state.isLoggedIn ?
-                (<div className={styles.userBody}>
+            <div className={styles.userBody}>
                     <div className={styles.userContent}>
                     <h1>Welcome to your tasks</h1>
                     <button onClick={this.readUser} className={styles.btn}>Read user</button>
@@ -189,11 +191,7 @@ class User extends Component {
                      />
                      </div>
                      <Footer />
-                    </div>)
-                :
-                <Redirect to="/" />
-            )}/>
-            
+                    </div>
         )
     }
 }

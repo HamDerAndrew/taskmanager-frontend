@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Login from '../pages/Login/Login';
 import Signup from '../pages/Signup/Signup';
 import About from '../pages/About/About';
@@ -46,11 +46,15 @@ class Routing extends Component {
                 <Route 
                     path="/user/" 
                     render={(props) => (
+                        this.state.loggedIn 
+                        ?
                         <User {...props} 
                             loggedIn={this.state.loggedIn} 
                             token={this.state.token}
                             logoutCallback={this.logoutCallback}
                         />
+                        :
+                        <Redirect to="/" />
                     )}
                 />
                 <Route path="*" render={() => (<div>404 not found</div>)} />
