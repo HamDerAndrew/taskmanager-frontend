@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './user.module.css';
-import { Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../../components/Modal/Modal';
 import CreateTaskModal from '../../components/Modal/Modal';
@@ -18,7 +17,7 @@ class User extends Component {
             createTaskModalToggled: false,
             taskId: '',
             description: '',
-            taskStatus: true
+            taskStatus: false
         }
     }
 
@@ -35,7 +34,6 @@ class User extends Component {
         
         axios.get(url, { 'headers': header })
         .then((response) => {
-            // this.props.history.replace({pathname: this.props.history.pathname("/")})
             console.log(response.data)
         }).catch((error) => {
             console.log(error)
@@ -139,59 +137,54 @@ class User extends Component {
     }
 
     componentDidMount() {
-        console.log("User component mounted")
         this.readTasks()
-    }
-
-    componentWillUnmount() {
-        console.log("Component unmounting")
     }
 
     render() {
         return (
             <div className={styles.userBody}>
-                    <div className={styles.userContent}>
-                    <h1>Welcome to your tasks</h1>
-                    <button onClick={this.readUser} className={styles.btn}>Read user</button>
-                    <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
-                    <button onClick={() => this.createTaskModal("", "")} className={styles.createBtn}>Create task</button>
-                    <button onClick={this.logOut} className={styles.btn}>Log out</button>
-                    <p>These are all of your tasks</p>
-                    <ul>
-                        {this.state.tasks.map((item) => (
-                            <li key={item._id} className={styles.listItem}>
-                                <div className={styles.taskItem}>
-                                    <div>
-                                        <p>Task: {item.description}</p>
-                                        <p>Completed: {item.completed.toString()}</p>
-                                    </div>
-                                    <div className={styles.btnContainer}>
-                                        <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
-                                        <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
-                                    </div>
+                <div className={styles.userContent}>
+                <h1>Welcome to your tasks</h1>
+                <button onClick={this.readUser} className={styles.btn}>Read user</button>
+                <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
+                <button onClick={() => this.createTaskModal("", this.state.taskStatus)} className={styles.createBtn}>Create task</button>
+                <button onClick={this.logOut} className={styles.btn}>Log out</button>
+                <p>These are all of your tasks</p>
+                <ul>
+                    {this.state.tasks.map((item) => (
+                        <li key={item._id} className={styles.listItem}>
+                            <div className={styles.taskItem}>
+                                <div>
+                                    <p>Task: {item.description}</p>
+                                    <p>Completed: {item.completed.toString()}</p>
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
-                    <Modal
-                        description={this.state.description}
-                        completed={this.state.taskStatus}
-                        active={this.state.isModalToggled}
-                        handleSubmit={this.handleSubmit}
-                        handleChange={this.handleChange}
-                        cancelEdit={this.cancelEdit}
-                     />
-                     <CreateTaskModal 
-                        description={this.state.description}
-                        completed={this.state.taskStatus}
-                        active={this.state.createTaskModalToggled}
-                        handleSubmit={this.handleSubmit}
-                        handleChange={this.handleChange}
-                        cancelEdit={this.cancelEdit}
-                     />
-                     </div>
-                     <Footer />
+                                <div className={styles.btnContainer}>
+                                    <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
+                                    <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                <Modal
+                    description={this.state.description}
+                    completed={this.state.taskStatus}
+                    active={this.state.isModalToggled}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    cancelEdit={this.cancelEdit}
+                    />
+                    <CreateTaskModal 
+                    description={this.state.description}
+                    completed={this.state.taskStatus}
+                    active={this.state.createTaskModalToggled}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    cancelEdit={this.cancelEdit}
+                    />
                     </div>
+                    <Footer />
+                </div>
         )
     }
 }

@@ -10,13 +10,13 @@ export const LogIn = (email, password) => {
 }
 
 // Create task request
-export const CreateTask = (token, description, taskStatus) => {
+export const CreateTask = (token, description, completed) => {
     const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
     const header = { 'Authorization': `Bearer ${token}`}
     return axios.post(url, 
         {
             description,
-            taskStatus
+            completed
         }, 
         { 'headers': header })
 }
