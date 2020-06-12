@@ -4,6 +4,11 @@
     margin: auto;
     width: 500px;
   }
+
+  .required {
+    font-style: italic;
+    margin-bottom: 5px;
+  }
   
   .inputBox {
     margin: 10px 0px;
