@@ -4,6 +4,7 @@ import Login from '../pages/Login/Login';
 import Signup from '../pages/Signup/Signup';
 import About from '../pages/About/About';
 import User from '../pages/User/User';
+import Profile from '../pages/Profile/Profile';
 
 class Routing extends Component {
     constructor(props) {
@@ -52,6 +53,18 @@ class Routing extends Component {
                             loggedIn={this.state.loggedIn} 
                             token={this.state.token}
                             logoutCallback={this.logoutCallback}
+                        />
+                        :
+                        <Redirect to="/" />
+                    )}
+                />
+                <Route 
+                    path="/profile"
+                    render={(props) => (
+                        this.state.loggedIn
+                        ?
+                        <Profile {...props} 
+                            loggedIn={this.state.loggedIn}
                         />
                         :
                         <Redirect to="/" />

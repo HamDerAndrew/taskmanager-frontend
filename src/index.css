@@ -12,6 +12,10 @@ ul {
   list-style: none;
 }
 
+.links {
+  color: #328afa;
+}
+
 label {
   margin-bottom: 10px;
 }

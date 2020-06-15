@@ -1,0 +1,14 @@
+.userProfileBody {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.btn {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #68a6f6;
+    margin-top: 15px;
+  }

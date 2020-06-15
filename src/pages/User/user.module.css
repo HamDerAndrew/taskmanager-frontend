@@ -9,6 +9,11 @@
     flex: 1;
 }
 
+.userContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
 .listItem {
     padding: 5px 0 5px 0;
 }
