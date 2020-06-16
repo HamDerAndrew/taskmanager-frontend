@@ -1,0 +1,61 @@
+.userModal {
+    display: none;
+    background-color: rgba(0, 0, 0, .4);
+    padding-top: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.userModalActive {
+    display: block
+}
+
+.userModalBody {
+    width: 50%;
+    margin: 0 auto;
+    background-color: whitesmoke;
+}
+
+.formbox {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    /* width: 500px; */
+  }
+
+  .required {
+    font-style: italic;
+    color: black;
+    margin-bottom: 5px;
+  }
+  
+  .inputBox {
+    margin: 10px 0px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 18px;
+  }
+
+  .btnContainer {
+      display: flex;
+  }
+
+  .btn {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid whitesmoke;
+    cursor: pointer;
+    font-size: 17px;
+    background-color: #68a6f6;
+  }
+
+  .btnCancel {
+      composes: btn;
+      background-color: red;
+  }

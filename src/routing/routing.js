@@ -65,6 +65,7 @@ class Routing extends Component {
                         ?
                         <Profile {...props} 
                             loggedIn={this.state.loggedIn}
+                            token={this.state.token}
                         />
                         :
                         <Redirect to="/" />

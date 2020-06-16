@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './userProfile.module.css';
 import { Link } from 'react-router-dom';
+import UserModal from '../../components/UserModal/UserModal';
 
 const UserProfile = (props) => {
     return (
@@ -19,9 +20,18 @@ const UserProfile = (props) => {
                 <h3>Password:</h3>
                 <p>{props.password}</p>
                 <div>
-                    <button className={styles.btn}>Edit</button>
+                    <button onClick={props.toggleEdit} className={styles.btn}>Edit</button>
                 </div>
             </div>
+            <UserModal 
+                active={props.active}
+                name={props.name}
+                age={props.age}
+                email={props.email}
+                handleChange={props.handleChange}
+                updateUser={props.updateUser}
+                cancelUpdate={props.cancelUpdate}
+            />
         </div>
     )
 }
