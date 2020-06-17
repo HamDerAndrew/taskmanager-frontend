@@ -42,6 +42,16 @@
     border: 1px solid darkgrey;
 }
 
+.userIcon {
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    margin-right: 10px;
+    border: 1px solid darkgrey;
+}
+
 .deleteBtn {
     composes: btn;
     background-color: red;

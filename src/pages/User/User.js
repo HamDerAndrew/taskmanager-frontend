@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styles from './user.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 import Modal from '../../components/Modal/Modal';
 import CreateTaskModal from '../../components/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
@@ -149,12 +151,13 @@ class User extends Component {
                 <div className={styles.userContainer}>
                     <div className={styles.crudBtns}>
                         <button onClick={this.readUser} className={styles.btn}>Read user</button>
-                        <button onClick={this.readTasks} className={styles.btn}>Read tasks</button>
                         <button onClick={() => this.createTaskModal("", this.state.taskStatus)} className={styles.createBtn}>Create task</button>
                         <button onClick={this.logOut} className={styles.btn}>Log out</button>
                     </div>
                     <div className={styles.userMenu}>
-                        <Link to="/profile">Profile</Link>
+                        <Link to="/profile" className={styles.userIcon}>
+                            <FontAwesomeIcon size={"lg"} icon={faUser} />
+                        </Link>
                     </div>
                 </div>
                 <p>These are all of your tasks</p>
