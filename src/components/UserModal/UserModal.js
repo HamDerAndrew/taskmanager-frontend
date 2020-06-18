@@ -10,12 +10,19 @@ const UserModal = (props) => {
                     <input className={styles.inputBox} type="text" name="name" value={props.name} placeholder="Name" onChange={props.handleChange} />
                     <input className={styles.inputBox} type="text" name="age" value={props.age} placeholder="Age" onChange={props.handleChange} />
                     <input className={styles.inputBox} type="email" name="email" value={props.email} placeholder="Email" onChange={props.handleChange} />
-                    <input className={styles.inputBox} type="password" name="password" value={props.password} placeholder="Password" onChange={props.handleChange} />
+                    <input className={styles.inputBox} type="password" name="password" value={props.password} placeholder="New Password" onChange={props.handleChange} />
                     <div className={styles.btnContainer}>
                         <button className={styles.btn} onClick={props.updateUser} type="submit">Save</button>
                         <button className={styles.btnCancel} onClick={props.cancelUpdate} type="submit">Cancel</button>
                     </div>
                 </form>
+                <div className={`${styles.errorContainer} ${props.formError ? styles.showError : ''}`}>
+                        <p>{props.errNetwork}</p>
+                        <p>{props.errName}</p>
+                        <p>{props.errAge}</p>
+                        <p>{props.errEmail}</p>
+                        <p>{props.errPassword}</p>
+                    </div>
             </div>
         </div>
     )

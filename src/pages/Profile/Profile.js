@@ -9,9 +9,15 @@ class Profile extends Component {
         super(props)
         this.state = {
             name: '',
-            age: 0,
+            age: '',
             email: '',
             password: '',
+            formError: false,
+            errName: '',
+            errAge: '',
+            errEmail: '',
+            errPassword: '',
+            errNetwork: '',
             isEditToggled: false
         }
     }
@@ -23,7 +29,7 @@ class Profile extends Component {
         })
     }
 
-    toggleEdit = () => {
+    toggleEdit = (type) => {
         console.log("Toggle Edit")
         this.setState(prevState => ({
             isEditToggled: !this.state.isEditToggled
@@ -38,7 +44,6 @@ class Profile extends Component {
     }
 
     updateUser = (event) => {
-        console.log(this.props.token)
         const { name, age, email, password } = this.state;
         const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
         const header = { 'Authorization': `Bearer ${this.props.token}`}
@@ -51,17 +56,54 @@ class Profile extends Component {
         }, {'headers': header})
         .then((response) => {
             console.log(response)
+            this.setState({
+                isEditToggled: false,
+                formError: false
+            })
         })
         .catch((error) => {
-            console.log(error.response)
-        })
-        this.setState({
-            isEditToggled: false
+            if(error.response === undefined) {
+                this.setState({
+                    formError: true,
+                    errNetwork: 'Network error.'
+                })
+            } else {
+                const { name = {}, age = {}, email = {}, password = {} } = error.response.data.errors
+                this.setState({
+                    formError: true,
+                    errName: name.message,
+                    errAge: age.message,
+                    errEmail: email.message,
+                    errPassword: password.message,
+                    errNetwork: ''
+                })
+            }
         })
     }
 
+    readUser = () => {
+        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
+        const header = { 'Authorization': `Bearer ${this.props.token}`}
+        axios.get(url, { 'headers': header })
+        .then((response) => {
+            const { name, age, email } = response.data;
+            this.setState({
+                name,
+                age,
+                email
+            })
+            console.log(response.data)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    componentDidMount() {
+        this.readUser();
+    }
+
     render() {
-        const { name, age, email, password, isEditToggled } = this.state;
+        const { name, age, email, password, isEditToggled, formError, errNetwork, errName, errAge, errEmail, errPassword } = this.state;
         return (
             <div className={styles.profileBody}>
                 <div className={styles.profileContent}>
@@ -71,6 +113,12 @@ class Profile extends Component {
                         email={email}
                         password={password}
                         active={isEditToggled}
+                        formError={formError}
+                        errNetwork={errNetwork}
+                        errName={errName}
+                        errAge={errAge}
+                        errEmail={errEmail}
+                        errPassword={errPassword}
                         handleChange={this.handleChange}
                         toggleEdit={this.toggleEdit}
                         updateUser={this.updateUser}

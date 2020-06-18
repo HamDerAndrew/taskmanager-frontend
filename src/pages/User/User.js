@@ -31,18 +31,6 @@ class User extends Component {
         })
       }
 
-    readUser = () => {
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        
-        axios.get(url, { 'headers': header })
-        .then((response) => {
-            console.log(response.data)
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-
     readTasks =  () => {
         const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
         const header = { 'Authorization': `Bearer ${this.state.token}`}

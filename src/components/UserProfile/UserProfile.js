@@ -28,6 +28,12 @@ const UserProfile = (props) => {
                 name={props.name}
                 age={props.age}
                 email={props.email}
+                formError={props.formError}
+                errNetwork={props.errNetwork}
+                errName={props.errName}
+                errAge={props.errAge}
+                errEmail={props.errEmail}
+                errPassword={props.errPassword}
                 handleChange={props.handleChange}
                 updateUser={props.updateUser}
                 cancelUpdate={props.cancelUpdate}
