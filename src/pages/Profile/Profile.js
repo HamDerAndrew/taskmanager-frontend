@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styles from './profile.module.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Spinner from 'react-spinkit';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import Footer from '../../components/Footer/Footer';
 
@@ -8,6 +10,7 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            fetchingUser: true,
             name: '',
             age: '',
             email: '',
@@ -90,7 +93,8 @@ class Profile extends Component {
             this.setState({
                 name,
                 age,
-                email
+                email,
+                fetchingUser: false
             })
             console.log(response.data)
         }).catch((error) => {
@@ -107,23 +111,34 @@ class Profile extends Component {
         return (
             <div className={styles.profileBody}>
                 <div className={styles.profileContent}>
-                    <UserProfile 
-                        name={name}
-                        age={age}
-                        email={email}
-                        password={password}
-                        active={isEditToggled}
-                        formError={formError}
-                        errNetwork={errNetwork}
-                        errName={errName}
-                        errAge={errAge}
-                        errEmail={errEmail}
-                        errPassword={errPassword}
-                        handleChange={this.handleChange}
-                        toggleEdit={this.toggleEdit}
-                        updateUser={this.updateUser}
-                        cancelUpdate={this.cancelUpdate}
-                    />
+                    <div className={styles.taskNav}>
+                        <Link className={styles.linkText} to="/user">Back to tasks</Link>
+                    </div>
+                    {
+                        this.state.fetchingUser
+                        ?
+                        <div className={styles.loadContainer}> 
+                            <Spinner fadeIn="none" name="folding-cube" color="blue" className={styles.showSpin}/>
+                        </div>
+                        :
+                        <UserProfile 
+                            name={name}
+                            age={age}
+                            email={email}
+                            password={password}
+                            active={isEditToggled}
+                            formError={formError}
+                            errNetwork={errNetwork}
+                            errName={errName}
+                            errAge={errAge}
+                            errEmail={errEmail}
+                            errPassword={errPassword}
+                            handleChange={this.handleChange}
+                            toggleEdit={this.toggleEdit}
+                            updateUser={this.updateUser}
+                            cancelUpdate={this.cancelUpdate}
+                        />
+                    }
                 </div>
                 <Footer />
             </div>

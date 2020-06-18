@@ -3,6 +3,19 @@
     margin: 0 auto;
 }
 
+.infoContainer {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.inputBox {
+    margin: 10px 0px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #257088;
+    font-size: 18px;
+  }
+
 .btn {
     padding: 15px;
     border-radius: 10px;
@@ -11,4 +24,17 @@
     font-size: 17px;
     background-color: #68a6f6;
     margin-top: 15px;
+    width: 150px;
+  }
+
+  @media only screen and (max-width: 580px) {
+    .userProfileBody {
+      width: 80%;
+    }
+
+    .infoContainer {
+        border: 0px;
+        border-radius: 0px;
+        padding: 0px;
+    }
   }

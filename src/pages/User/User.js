@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './user.module.css';
 import axios from 'axios';
+import Spinner from 'react-spinkit';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +14,7 @@ class User extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            fetchingTasks: true,
             isLoggedIn: this.props.loggedIn,
             tasks: [],
             token: this.props.token,
@@ -36,7 +38,10 @@ class User extends Component {
         const header = { 'Authorization': `Bearer ${this.state.token}`}
         axios.get(url, { 'headers': header })  
         .then((response) => {
-            this.setState({tasks: response.data})
+            this.setState({
+                tasks: response.data,
+                fetchingTasks: false
+            })
         }).catch((error) => {
             console.log(error)
         })
@@ -149,37 +154,45 @@ class User extends Component {
                     </div>
                 </div>
                 <p>These are all of your tasks</p>
-                <ul>
-                    {this.state.tasks.map((item) => (
-                        <li key={item._id} className={styles.listItem}>
-                            <div className={styles.taskItem}>
-                                <div>
-                                    <p>Task: {item.description}</p>
-                                    <p>Completed: {item.completed.toString()}</p>
+                {
+                    this.state.fetchingTasks
+                    ?
+                    <div className={styles.loadContainer}> 
+                        <Spinner fadeIn="none" name="folding-cube" color="blue" className={styles.showSpin}/>
+                    </div>
+                    :
+                    <ul>
+                        {this.state.tasks.map((item) => (
+                            <li key={item._id} className={styles.listItem}>
+                                <div className={styles.taskItem}>
+                                    <div>
+                                        <p>Task: {item.description}</p>
+                                        <p>Completed: {item.completed.toString()}</p>
+                                    </div>
+                                    <div className={styles.btnContainer}>
+                                        <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
+                                        <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
+                                    </div>
                                 </div>
-                                <div className={styles.btnContainer}>
-                                    <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
-                                    <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-                <Modal
-                    description={this.state.description}
-                    completed={this.state.taskStatus}
-                    active={this.state.isModalToggled}
-                    handleSubmit={this.handleSubmit}
-                    handleChange={this.handleChange}
-                    cancelEdit={this.cancelEdit}
+                            </li>
+                        ))}
+                    </ul>
+                }
+                    <Modal
+                        description={this.state.description}
+                        completed={this.state.taskStatus}
+                        active={this.state.isModalToggled}
+                        handleSubmit={this.handleSubmit}
+                        handleChange={this.handleChange}
+                        cancelEdit={this.cancelEdit}
                     />
                     <CreateTaskModal 
-                    description={this.state.description}
-                    completed={this.state.taskStatus}
-                    active={this.state.createTaskModalToggled}
-                    handleSubmit={this.handleSubmit}
-                    handleChange={this.handleChange}
-                    cancelEdit={this.cancelEdit}
+                        description={this.state.description}
+                        completed={this.state.taskStatus}
+                        active={this.state.createTaskModalToggled}
+                        handleSubmit={this.handleSubmit}
+                        handleChange={this.handleChange}
+                        cancelEdit={this.cancelEdit}
                     />
                     </div>
                     <Footer />
