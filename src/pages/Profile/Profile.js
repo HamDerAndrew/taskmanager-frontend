@@ -26,14 +26,12 @@ class Profile extends Component {
     }
 
     handleChange = (event) => {
-        console.log(event.target.value)
         this.setState({
             [event.target.name]: event.target.value
         })
     }
 
-    toggleEdit = (type) => {
-        console.log("Toggle Edit")
+    toggleEdit = () => {
         this.setState(prevState => ({
             isEditToggled: !this.state.isEditToggled
         }))
@@ -96,7 +94,6 @@ class Profile extends Component {
                 email,
                 fetchingUser: false
             })
-            console.log(response.data)
         }).catch((error) => {
             console.log(error)
         })

@@ -51,7 +51,6 @@ class User extends Component {
         const { token, description, taskStatus } = this.state
         CreateTask(token, description, taskStatus)
         .then((response) => {
-            console.log("Task created. ", response.data)
             this.readTasks()
         }).catch((error) => {
             console.log(error)
@@ -71,7 +70,6 @@ class User extends Component {
         const { token, description, taskStatus } = this.state
         UpdateTask(taskId, token, description, taskStatus)
         .then((response) => {
-            console.log(response.data)
             this.readTasks();
         }).catch((error) => {
             console.log(error)

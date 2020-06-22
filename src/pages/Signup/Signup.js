@@ -39,7 +39,6 @@ class Signup extends Component {
             password
         })
         .then((response) => {
-            console.log(response.data)
             console.log("User created")
         })
         .catch((error) => {
