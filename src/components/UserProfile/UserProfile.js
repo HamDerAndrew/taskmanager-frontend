@@ -15,8 +15,9 @@ const UserProfile = (props) => {
                 <p className={styles.inputBox}>{props.email}</p>
                 <h3>Password:</h3>
                 <p className={styles.inputBox}>password will not be displayed</p>
-                <div>
+                <div className={styles.btnContainer}>
                     <button onClick={props.toggleEdit} className={styles.btn}>Edit</button>
+                    <button onClick={props.deleteUser} className={styles.btnDel}>Delete account</button>
                 </div>
             </div>
             <UserModal 

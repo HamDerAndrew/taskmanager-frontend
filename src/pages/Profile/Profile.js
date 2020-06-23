@@ -82,6 +82,26 @@ class Profile extends Component {
         })
     }
 
+    deleteUser = (event) => {
+        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
+        const header = { 'Authorization': `Bearer ${this.props.token}`}
+        event.preventDefault()
+        if (window.confirm('Are you sure you want to delete your account?')) {
+            console.log("delete account")
+            axios.delete(url, {'headers': header})
+            .then((response) => {
+                console.log("user deleted - ", response)
+                // TO DO: Unset token before .push()
+                this.props.history.push("/")
+            })
+            .catch((error) => {
+                console.log("Error deleting user. ", error)
+            })
+        } else {
+            console.log("dont delete account")
+        }
+    }
+
     readUser = () => {
         const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
         const header = { 'Authorization': `Bearer ${this.props.token}`}
@@ -133,6 +153,7 @@ class Profile extends Component {
                             handleChange={this.handleChange}
                             toggleEdit={this.toggleEdit}
                             updateUser={this.updateUser}
+                            deleteUser={this.deleteUser}
                             cancelUpdate={this.cancelUpdate}
                         />
                     }

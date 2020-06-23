@@ -16,6 +16,11 @@
     font-size: 18px;
   }
 
+.btnContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn {
     padding: 15px;
     border-radius: 10px;
@@ -25,6 +30,11 @@
     background-color: #68a6f6;
     margin-top: 15px;
     width: 150px;
+  }
+
+  .btnDel {
+    composes: btn;
+    background-color: red;
   }
 
   @media only screen and (max-width: 580px) {
