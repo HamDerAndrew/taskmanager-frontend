@@ -39,7 +39,8 @@ class Signup extends Component {
             password
         })
         .then((response) => {
-            console.log("User created")
+            alert("Your user has been created successfully :)")
+            this.props.history.push("/")
         })
         .catch((error) => {
             if(error.response === undefined) {
