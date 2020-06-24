@@ -15,6 +15,13 @@ class Routing extends Component {
         }
     }
 
+    deletionCallback = (childData) => {
+        this.setState({
+            loggedIn: childData.loggedIn,
+            token: childData.token
+        })
+    }
+
     logoutCallback = (childData) => {
         this.setState({
             loggedIn: childData.loggedIn,
@@ -66,6 +73,7 @@ class Routing extends Component {
                         <Profile {...props} 
                             loggedIn={this.state.loggedIn}
                             token={this.state.token}
+                            deletionCallback={this.deletionCallback}
                         />
                         :
                         <Redirect to="/" />

@@ -91,7 +91,7 @@ class Profile extends Component {
             axios.delete(url, {'headers': header})
             .then((response) => {
                 console.log("user deleted - ", response)
-                // TO DO: Unset token before .push()
+                this.sendDeletion()
                 this.props.history.push("/")
             })
             .catch((error) => {
@@ -117,6 +117,10 @@ class Profile extends Component {
         }).catch((error) => {
             console.log(error)
         })
+    }
+
+    sendDeletion = () => {
+        this.props.deletionCallback({loggedIn: false, token: ''})
     }
 
     componentDidMount() {
