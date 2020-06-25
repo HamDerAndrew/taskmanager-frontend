@@ -4,7 +4,8 @@ import axios from 'axios';
 import Spinner from 'react-spinkit';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import TaskList from '../../components/TaskList/TaskList';
 import Modal from '../../components/Modal/Modal';
 import CreateTaskModal from '../../components/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
@@ -159,22 +160,11 @@ class User extends Component {
                         <Spinner fadeIn="none" name="folding-cube" color="blue" className={styles.showSpin}/>
                     </div>
                     :
-                    <ul>
-                        {this.state.tasks.map((item) => (
-                            <li key={item._id} className={styles.listItem}>
-                                <div className={styles.taskItem}>
-                                    <div>
-                                        <p>Task: {item.description}</p>
-                                        <p>Completed: {item.completed.toString()}</p>
-                                    </div>
-                                    <div className={styles.btnContainer}>
-                                        <button onClick={() => this.deleteTask(item._id)} className={styles.deleteBtn}>Delete</button>
-                                        <button onClick={() => this.toggleModal(item._id, item.description, item.completed)} className={styles.editBtn}>Edit</button>
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    <TaskList 
+                        tasks={this.state.tasks}
+                        deleteTask={this.deleteTask}
+                        toggleModal={this.toggleModal}
+                    />
                 }
                     <Modal
                         description={this.state.description}
