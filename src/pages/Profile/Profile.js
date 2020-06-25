@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styles from './profile.module.css';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-spinkit';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import Footer from '../../components/Footer/Footer';
+import { ReadUser, UpdateUser, DeleteUser } from '../../services/ApiService';
 
 class Profile extends Component {
     constructor(props) {
@@ -46,15 +46,8 @@ class Profile extends Component {
 
     updateUser = (event) => {
         const { name, age, email, password } = this.state;
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
-        const header = { 'Authorization': `Bearer ${this.props.token}`}
         event.preventDefault();
-        axios.patch(url, {
-            name,
-            age,
-            email,
-            password
-        }, {'headers': header})
+        UpdateUser(name, age, email, password, this.props.token)
         .then((response) => {
             console.log(response)
             this.setState({
@@ -83,12 +76,9 @@ class Profile extends Component {
     }
 
     deleteUser = (event) => {
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
-        const header = { 'Authorization': `Bearer ${this.props.token}`}
         event.preventDefault()
         if (window.confirm('Are you sure you want to delete your account?')) {
-            console.log("delete account")
-            axios.delete(url, {'headers': header})
+            DeleteUser(this.props.token)
             .then((response) => {
                 console.log("user deleted - ", response)
                 this.sendDeletion()
@@ -97,15 +87,11 @@ class Profile extends Component {
             .catch((error) => {
                 console.log("Error deleting user. ", error)
             })
-        } else {
-            console.log("dont delete account")
         }
     }
 
     readUser = () => {
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
-        const header = { 'Authorization': `Bearer ${this.props.token}`}
-        axios.get(url, { 'headers': header })
+        ReadUser(this.props.token)
         .then((response) => {
             const { name, age, email } = response.data;
             this.setState({

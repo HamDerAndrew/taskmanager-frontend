@@ -44,3 +44,29 @@ export const LogOut = (token) => {
     const header = { 'Authorization': `Bearer ${token}`}
     return axios.post(url, {}, {'headers': header})
 }
+
+// Read user request
+export const ReadUser = (token) => {
+    const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
+    const header = { 'Authorization': `Bearer ${token}`}
+    return axios.get(url, { 'headers': header })
+}
+
+// Update user request
+export const UpdateUser = (name, age, email, password, token) => {
+    const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
+    const header = { 'Authorization': `Bearer ${token}`}
+    return axios.patch(url, {
+        name,
+        age,
+        email,
+        password
+    }, {'headers': header})
+}
+
+// Delete account/user request
+export const DeleteUser = (token) => {
+    const url = 'https://larsen-taskmanager-project.herokuapp.com/users/user'
+    const header = { 'Authorization': `Bearer ${token}`}
+    return axios.delete(url, {'headers': header})
+}

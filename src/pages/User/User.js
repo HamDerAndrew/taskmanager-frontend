@@ -142,7 +142,6 @@ class User extends Component {
                 <h1>Welcome to your tasks</h1>
                 <div className={styles.userContainer}>
                     <div className={styles.crudBtns}>
-                        <button onClick={this.readUser} className={styles.btn}>Read user</button>
                         <button onClick={() => this.createTaskModal("", this.state.taskStatus)} className={styles.createBtn}>Create task</button>
                         <button onClick={this.logOut} className={styles.btn}>Log out</button>
                     </div>
@@ -153,19 +152,19 @@ class User extends Component {
                     </div>
                 </div>
                 <p>These are all of your tasks</p>
-                {
-                    this.state.fetchingTasks
-                    ?
-                    <div className={styles.loadContainer}> 
-                        <Spinner fadeIn="none" name="folding-cube" color="blue" className={styles.showSpin}/>
-                    </div>
-                    :
-                    <TaskList 
-                        tasks={this.state.tasks}
-                        deleteTask={this.deleteTask}
-                        toggleModal={this.toggleModal}
-                    />
-                }
+                    {
+                        this.state.fetchingTasks
+                        ?
+                        <div className={styles.loadContainer}> 
+                            <Spinner fadeIn="none" name="folding-cube" color="blue" className={styles.showSpin}/>
+                        </div>
+                        :
+                        <TaskList 
+                            tasks={this.state.tasks}
+                            deleteTask={this.deleteTask}
+                            toggleModal={this.toggleModal}
+                        />
+                    }
                     <Modal
                         description={this.state.description}
                         completed={this.state.taskStatus}
