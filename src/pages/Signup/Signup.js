@@ -49,7 +49,17 @@ class Signup extends Component {
                     formError: true,
                     errNetwork: 'Network error.'
                 })
+            } else if (error.response.data.errmsg) {
+                /* Handling Mongoose 'E11000 duplicate key error collection'.
+                ** This only occurs if an email already exists, which returns a different Error object and
+                ** therefore it is handled in this 'else if' statement. It feels hacky, but this is the solution so far
+                */
+                this.setState({
+                    formError: true,
+                    errEmail: 'Email already exists'
+                })
             } else {
+                console.log(error.response)
                 const { name = {}, age = {}, email = {}, password = {} } = error.response.data.errors
                 this.setState({
                     formError: true,

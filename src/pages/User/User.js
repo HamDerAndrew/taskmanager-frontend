@@ -139,18 +139,18 @@ class User extends Component {
         return (
             <div className={styles.userBody}>
                 <div className={styles.userContent}>
-                <h1>Welcome to your tasks</h1>
-                <div className={styles.userContainer}>
-                    <div className={styles.crudBtns}>
-                        <button onClick={() => this.createTaskModal("", this.state.taskStatus)} className={styles.createBtn}>Create task</button>
-                        <button onClick={this.logOut} className={styles.btn}>Log out</button>
+                    <h1>Welcome to your tasks</h1>
+                    <div className={styles.userContainer}>
+                        <div className={styles.crudBtns}>
+                            <button onClick={() => this.createTaskModal("", this.state.taskStatus)} className={styles.createBtn}>Create task</button>
+                            <button onClick={this.logOut} className={styles.btn}>Log out</button>
+                        </div>
+                        <div className={styles.userMenu}>
+                            <Link to="/profile" className={styles.userIcon}>
+                                <FontAwesomeIcon size={"lg"} icon={faUser} />
+                            </Link>
+                        </div>
                     </div>
-                    <div className={styles.userMenu}>
-                        <Link to="/profile" className={styles.userIcon}>
-                            <FontAwesomeIcon size={"lg"} icon={faUser} />
-                        </Link>
-                    </div>
-                </div>
                 <p>These are all of your tasks</p>
                     {
                         this.state.fetchingTasks
@@ -181,9 +181,9 @@ class User extends Component {
                         handleChange={this.handleChange}
                         cancelEdit={this.cancelEdit}
                     />
-                    </div>
-                    <Footer />
                 </div>
+                <Footer />
+            </div>
         )
     }
 }
