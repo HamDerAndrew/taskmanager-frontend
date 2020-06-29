@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './user.module.css';
-import axios from 'axios';
 import Spinner from 'react-spinkit';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +8,7 @@ import TaskList from '../../components/TaskList/TaskList';
 import Modal from '../../components/Modal/Modal';
 import CreateTaskModal from '../../components/Modal/Modal';
 import Footer from '../../components/Footer/Footer';
-import { CreateTask, UpdateTask, DeleteTask, LogOut } from '../../services/ApiService';
+import { CreateTask, ReadTasks, UpdateTask, DeleteTask, LogOut } from '../../services/ApiService';
 
 class User extends Component {
     constructor(props) {
@@ -35,9 +34,7 @@ class User extends Component {
       }
 
     readTasks =  () => {
-        const url = 'https://larsen-taskmanager-project.herokuapp.com/tasks'
-        const header = { 'Authorization': `Bearer ${this.state.token}`}
-        axios.get(url, { 'headers': header })  
+        ReadTasks(this.props.token)
         .then((response) => {
             this.setState({
                 tasks: response.data,

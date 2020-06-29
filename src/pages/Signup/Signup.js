@@ -28,7 +28,6 @@ class Signup extends Component {
         })
     }
 
-    // TO DO: If a user tries to sign up with an email that exists, the error returns cannot read 'name' of 'undefined'
     handleSubmit = (event) => {
         const url = 'https://larsen-taskmanager-project.herokuapp.com/users/'
         const { name, age, email, password } = this.state
@@ -59,7 +58,6 @@ class Signup extends Component {
                     errEmail: 'Email already exists'
                 })
             } else {
-                console.log(error.response)
                 const { name = {}, age = {}, email = {}, password = {} } = error.response.data.errors
                 this.setState({
                     formError: true,
