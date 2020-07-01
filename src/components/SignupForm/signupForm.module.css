@@ -26,3 +26,19 @@
     font-size: 17px;
     background-color: #68a6f6;
   }
+
+  .spinContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .showSpin {
+    width: 15px !important;
+    height: 15px !important;
+    float: right;
+  }
+
+  .hideSpin {
+    display: none;
+  }

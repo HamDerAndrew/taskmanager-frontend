@@ -12,8 +12,8 @@ class Login extends Component {
     this.state = {
       loggedIn: false,
       token: '',
-      email: 'andrewsondergaard@gmail.com',
-      password: 'test123',
+      email: '',
+      password: '',
       loading: false
     }
   }
@@ -67,6 +67,7 @@ class Login extends Component {
               loginHandler={this.loginHandler}
               loadSpin={this.state.loading}
             />
+            <p><i>Note: if you just want to test it without creating a user you can use "testuser@testuser.com" and password "test123"</i> </p>
         </div> 
         <Footer />
       </div>

@@ -18,7 +18,8 @@ class Signup extends Component {
             errAge: '',
             errEmail: '',
             errPassword: '',
-            errNetwork: ''
+            errNetwork: '',
+            loading: false
         }
     }
 
@@ -32,6 +33,9 @@ class Signup extends Component {
         const url = 'https://larsen-taskmanager-project.herokuapp.com/users/'
         const { name, age, email, password } = this.state
         event.preventDefault()
+        this.setState({
+            loading: true
+          })
         axios.post(url, {
             name,
             age,
@@ -39,10 +43,16 @@ class Signup extends Component {
             password
         })
         .then((response) => {
+            this.setState({
+                loading: false
+              })
             alert("Your user has been created successfully :)")
             this.props.history.push("/")
         })
         .catch((error) => {
+            this.setState({
+                loading: false
+              })
             if(error.response === undefined) {
                 this.setState({
                     formError: true,
@@ -83,6 +93,7 @@ class Signup extends Component {
                         password={this.state.password}
                         handleSubmit={this.handleSubmit}
                         handleChange={this.handleChange}
+                        loadSpin={this.state.loading}
                     />
                     <div className={`${styles.errorContainer} ${this.state.formError ? styles.showError : ''}`}>
                         <p>{this.state.errNetwork}</p>

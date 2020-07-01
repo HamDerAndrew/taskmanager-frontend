@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './signupForm.module.css';
+import Spinner from 'react-spinkit';
 
 const SignupForm = (props) => {
     return (
@@ -10,6 +11,9 @@ const SignupForm = (props) => {
             <input className={styles.inputBox} type="email" name="email" value={props.email} placeholder="Email*" onChange={props.handleChange} />
             <input className={styles.inputBox} type="password" name="password" value={props.password} placeholder="Password*" onChange={props.handleChange} />
             <button className={styles.btn} type="submit">Sign up</button>
+            <div className={styles.spinContainer}>
+                <Spinner name="folding-cube" color="blue" className={ props.loadSpin ? styles.showSpin : styles.hideSpin}/>
+            </div>
         </form>
     )
 }
