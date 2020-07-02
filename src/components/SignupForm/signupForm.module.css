@@ -8,6 +8,7 @@
   .required {
     font-style: italic;
     margin-bottom: 5px;
+    color: #bbb7bb;
   }
   
   .inputBox {

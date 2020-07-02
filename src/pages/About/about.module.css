@@ -9,6 +9,11 @@
 }
 
 .article {
+    color: white;
     margin: 0 auto;
     width: 50%;
+}
+
+.note {
+    color: #bbb7bb;
 }
