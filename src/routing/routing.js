@@ -43,9 +43,9 @@ class Routing extends Component {
                     exact path="/" 
                     render={(props) => (
                         <Login {...props}
-                        loggedIn={this.state.loggedIn}
-                        token={this.state.token}
-                        loginCallback={this.loginCallback}
+                            loggedIn={this.state.loggedIn}
+                            token={this.state.token}
+                            loginCallback={this.loginCallback}
                         />
                     )}
                 />
